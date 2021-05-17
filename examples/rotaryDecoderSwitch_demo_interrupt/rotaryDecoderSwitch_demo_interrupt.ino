@@ -24,7 +24,7 @@
 
 
 #include "Wire.h"
-#include "rotaryDecoderSwitchs.h"
+#include "rotaryDecoderSwitch.h"
 
 rotaryDecoderSwitch decoder(0x20);
 
@@ -65,7 +65,7 @@ void loop()
       Serial.print("\t");
       Serial.print(decoder.getValue(i));
       Serial.print("\t");
-      Serial.print(decoder.getKeyPressed(i));
+      Serial.print(decoder.isKeyPressed(i));
     }
     Serial.println();
   }

@@ -51,7 +51,7 @@ void loop()
       Serial.print("\t");
       Serial.print(decoder.getValue(i));
       Serial.print("\t");
-      Serial.print(decoder.getKeyPressed(i));
+      Serial.print(decoder.isKeyPressed(i));
     }
     Serial.println();
   }

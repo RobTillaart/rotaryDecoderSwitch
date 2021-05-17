@@ -19,16 +19,16 @@ interface is kept same as much as possible.
 ```cpp
 // connect up to 2 rotary encoders with a switch to 1 PCF8574.
 //
-//  RotaryEncoder    PCF8574      UNO
-//  --------------------------------------
+//  RotaryEncoder    PCF8574      UNO         REMARKS
+//  -----------------------------------------------------------
 //   1 pin A          pin 0
 //   1 pin B          pin 1
-//   1 switch         pin 2
-//                    pin 3   (reserved)
+//   1 switch         pin 2                   (switch to gnd)
+//                    pin 3                   (reserved)
 //   2 pin A          pin 4
 //   2 pin B          pin 5
-//   2 switch         pin 6
-//                    pin 7   (reserved)
+//   2 switch         pin 6                   (switch to gnd)
+//                    pin 7                   (reserved)
 //
 //                    SDA         A4
 //                    SCL         A5
@@ -56,7 +56,7 @@ returns true if the PCF8574 is on the I2C bus.
 
 - **void readInitialState()** read the inital state of the 2 rotary encoders. typically called in setup only, or after a sleep e.g. in combination with **setValue()**
 - **bool checkChange()** polling to see if one or more RE have changed, without updating the counters.
-- **void update()** update the internal counters of the RE. These will add +1 or -1 depending on direction. 
+- **void update()** update the internal counters of the RE, and the flags if a key is pressed. The counters will add +1 or -1 depending on direction. Need to be called before **getValue()** or before **getKeyPressed()**.
 - **void updateSingle()** update the internal counters of the RE. This will add +1 +2 or +3 as it assumes that the rotary encoder only goes into a single direction. 
 
 
@@ -64,7 +64,7 @@ returns true if the PCF8574 is on the I2C bus.
 
 - **uint32_t getValue(uint8_r re)** returns the RE counter. (re = 0 or 1).
 - **void setValue(uint8_r re, uint32_t val = 0)** (re)set the internal counter to val, default 0
-- **bool getKeyPressed(uint8_t re)** returns true is the switch is pressed of the RE (re = 0 or 1)
+- **bool isKeyPressed(uint8_t re)** returns true is the switch is pressed of the RE (re = 0 or 1). Note one needs to call **update()** first!
 
 
 ## Debugging
@@ -79,20 +79,20 @@ As the decoder is based upon a PCF8574, a I2C device, the performance is affecte
 clockspeed of the I2C bus. All four core functions have one call to **\_read()** which is the most expensive part.
 
 Early tests gave the following indicative times (Arduino UNO) for the **update()** 
-function (with no updates it is ~8 us faster). Note that above 500KHz the gain becomes less
+function. Note that above 500KHz the gain becomes less
 while reliability of signal decreases. (500KHz is ~3x faster than 100 KHz)
 
 | I2C speed | time (us) | delta |  %%  |
 |:---------:|:---------:|:-----:|:-----:|
-| 100 KHz   |    247    |       |       |
-| 200 KHz   |    146    |  99   | 40%   |
-| 300 KHz   |    110    |  36   | 24%   |
-| 400 KHz   |     95    |  15   | 14%   | preferred max
-| 500 KHz   |     84    |  11   | 12%   |
-| 600 KHz   |     79    |   5   |  6%   |
-| 700 KHz   |     73    |   6   |  8%   |
+| 100 KHz   |    234    |       |       |
+| 200 KHz   |    136    |  98   | 42%   |
+| 300 KHz   |    100    |  36   | 26%   |
+| 400 KHz   |     85    |  15   | 15%   | preferred max
+| 500 KHz   |     78    |   7   |  8%   |
+| 600 KHz   |     67    |  11   | 14%   | (strange outlier)
+| 700 KHz   |     63    |   4   |  6%   |
 
-At @400KHz it can update 4 rotary encoders in ~100us. 
+At @400KHz it can update 2 rotary encoders in less than 90 us. 
 At a 50% update percentage this implies a max of about 
 5000 **update()** calls per second in theory 
 **to be tested in practice**

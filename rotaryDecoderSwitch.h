@@ -39,10 +39,11 @@ public:
 
   int32_t getValue(uint8_t re) { return _encoder[re]; };
   void    setValue(uint8_t re, int32_t val = 0) { _encoder[re] = val; };
+  bool    isKeyPressed(uint8_t re);
 
   // DEBUG
   uint8_t getLastPosition(uint8_t re) { return _lastPos[re]; };
-  uint8_t getRaw() { return _read8: };
+  uint8_t getRaw() { return _read8(); };
 
 private:
   uint8_t   _cnt = 0;

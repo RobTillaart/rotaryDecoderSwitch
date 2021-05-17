@@ -142,6 +142,14 @@ bool rotaryDecoderSwitch::updateSingle()
 }
 
 
+bool rotaryDecoderSwitch::isKeyPressed(uint8_t re)
+{
+  uint8_t mask = 0x04;
+  if (re > 0) mask = 0x40;
+  return (_lastVal & mask) == 0;
+}
+
+
 uint8_t rotaryDecoderSwitch::_read8()
 {
   _wire->requestFrom(_address, (uint8_t)1);
