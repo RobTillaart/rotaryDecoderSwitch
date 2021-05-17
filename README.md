@@ -56,7 +56,7 @@ returns true if the PCF8574 is on the I2C bus.
 
 - **void readInitialState()** read the inital state of the 2 rotary encoders. typically called in setup only, or after a sleep e.g. in combination with **setValue()**
 - **bool checkChange()** polling to see if one or more RE have changed, without updating the counters.
-- **void update()** update the internal counters of the RE, and the flags if a key is pressed. The counters will add +1 or -1 depending on direction. Need to be called before **getValue()** or before **getKeyPressed()**.
+- **void update()** update the internal counters of the RE, and the flags if a key is pressed. The counters will add +1 or -1 depending on direction. Need to be called before **getValue()** or before **getKeyPressed()**. Note that **update()** must be called as soon as possible after the interrupt occurs (or as often as possible when polling).
 - **void updateSingle()** update the internal counters of the RE. This will add +1 +2 or +3 as it assumes that the rotary encoder only goes into a single direction. 
 
 
@@ -64,7 +64,7 @@ returns true if the PCF8574 is on the I2C bus.
 
 - **uint32_t getValue(uint8_r re)** returns the RE counter. (re = 0 or 1).
 - **void setValue(uint8_r re, uint32_t val = 0)** (re)set the internal counter to val, default 0
-- **bool isKeyPressed(uint8_t re)** returns true is the switch is pressed of the RE (re = 0 or 1). Note one needs to call **update()** first!
+- **bool isKeyPressed(uint8_t re)** returns true is the switch is pressed of the RE selected (re = 0 or 1). Note one needs to call **update()** first!
 
 
 ## Debugging
