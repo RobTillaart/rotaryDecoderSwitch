@@ -156,7 +156,7 @@ bool rotaryDecoderSwitch::isKeyPressed(uint8_t re)
 //
 //  READ - WRITE interface
 //
-uint8_t rotaryDecoder::read1(uint8_t pin)
+uint8_t rotaryDecoderSwitch::read1(uint8_t pin)
 {
   uint8_t mask = 1 << pin;
   uint8_t tmp = read8();
@@ -164,7 +164,7 @@ uint8_t rotaryDecoder::read1(uint8_t pin)
 }
 
 
-bool rotaryDecoder::write1(uint8_t pin, uint8_t value)
+bool rotaryDecoderSwitch::write1(uint8_t pin, uint8_t value)
 {
   uint8_t mask = 1 << pin;
   uint8_t tmp = read8();
@@ -174,7 +174,7 @@ bool rotaryDecoder::write1(uint8_t pin, uint8_t value)
 }
 
 
-uint8_t rotaryDecoder::read8()
+uint8_t rotaryDecoderSwitch::read8()
 {
   _wire->requestFrom(_address, (uint8_t)1);
   uint8_t x = _wire->read();
@@ -183,7 +183,7 @@ uint8_t rotaryDecoder::read8()
 }
 
 
-bool rotaryDecoder::write8(uint8_t value)
+bool rotaryDecoderSwitch::write8(uint8_t value)
 {
   _wire->beginTransmission(_address);
   _wire->write(value);
