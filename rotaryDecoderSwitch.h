@@ -22,7 +22,7 @@ public:
   bool    begin(uint8_t count = 2);
   bool    isConnected();
 
-  void    readInitialState();
+  uint8_t readInitialState();
 
   //  for polling version,
   //  checkChange is bit faster than a call to update
@@ -35,7 +35,7 @@ public:
 
   //  re = rotary encoder
   int32_t getValue(uint8_t re);
-  void    setValue(uint8_t re, int32_t value = 0);
+  bool    setValue(uint8_t re, int32_t value = 0);
   bool    isKeyPressed(uint8_t re);
 
 
