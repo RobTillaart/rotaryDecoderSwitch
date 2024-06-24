@@ -64,7 +64,8 @@ Note the above mapping is sort of compatible to using the rotaryDecoder class an
 
 #### Constructor
 
-- **rotaryDecoderSwitch(const int8_t address, TwoWire \*wire = Wire)** constructor to set the address and optional the Wire bus.
+- **rotaryDecoderSwitch(const int8_t address, TwoWire \*wire = Wire)**
+constructor to set the address and optional the Wire bus.
 - **bool begin(uint8_t count = 2)** UNO ea. initializes the class. 
 count is the number of rotary encoders connected.
 returns true if the PCF8574 is on the I2C bus.
@@ -95,10 +96,10 @@ Returns false if there is no change since last read.
 #### Counters & keypresses
 
 - **int32_t getValue(uint8_r re)** returns the RE counter. (re = 0 or 1).
-If the parameter re > 3 then 0 is returned.
+If the parameter re > 1 then 0 is returned.
 - **bool setValue(uint8_r re, int32_t value = 0)** (re)set the internal counter to value, default 0.
-If the parameter re > 3 then false is returned, true otherwise.
-- **bool isKeyPressed(uint8_t re)** returns true is the switch is pressed of the RE selected (re = 0 or 1).
+If the parameter re > 1 then false is returned, true otherwise.
+- **bool isKeyPressed(uint8_t re)** returns true if the switch is pressed of the RE selected (re = 0 or 1).
 Note one needs to call **update()** first!
 
 
@@ -127,7 +128,6 @@ rotary encoder pins.
 #### Debugging
 
 - **int8_t getLastPosition(uint8_r re)** (re = 0 or 1). Returns last position.
-- **int8_t getRaw()** 
 
 
 ## Performance
