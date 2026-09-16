@@ -55,12 +55,13 @@ void rotaryDecoderSwitch::reset()
 }
 
 
-void rotaryDecoderSwitch::reset(uint8_t re)
+bool rotaryDecoderSwitch::reset(uint8_t re)
 {
-  if (re >= ROTDEC_MAX_COUNT) return;
+  if (re >= ROTDEC_MAX_COUNT) return false;
   _encoder[re] = 0;
   //  update last positions.
   _lastValue = readInitialState();
+  return true;
 }
 
 
@@ -182,6 +183,7 @@ bool rotaryDecoderSwitch::setValue(uint8_t re, int32_t value)
 
 bool rotaryDecoderSwitch::isKeyPressed(uint8_t re)
 {
+  if (re >= ROTDEC_MAX_COUNT) return false;
   uint8_t mask = 0x04;
   if (re > 0) mask = 0x40;
   return (_lastValue & mask) == 0;

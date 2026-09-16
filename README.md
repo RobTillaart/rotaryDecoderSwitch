@@ -24,8 +24,6 @@ If only 1 rotary encoders is connected one should use the lower bit lines as the
 library assumes these are used. Furthermore it is advised to connect the free PCF8574
 pins to GND so you will not get unintended interrupts.
 
-Note: This library works (limited) with the PCF8575.
-
 As always, feedback is welcome.
 
 
@@ -69,7 +67,7 @@ See also Interrupts section below.
 ```
 // connect up to 2 rotary encoders with a switch to 1 PCF8574.
 //
-//  RotaryEncoder    PCF8574      UNO         REMARKS
+//  RotaryEncoder    PCF8574      UNO R3      REMARKS
 //  -----------------------------------------------------------
 //   1 pin A          pin 0
 //   1 pin B          pin 1
@@ -84,8 +82,6 @@ See also Interrupts section below.
 //                    SCL         A5
 //
 ```
-
-Note: the above mapping is sort of compatible to using the rotaryDecoder class and using device 0 and 2 only,
 
 
 ## Interface
@@ -106,9 +102,9 @@ Returns true if the PCF8574 is on the I2C bus.
 convenience e.g. for for loops.
 - **void reset()** reset all internal counters to 0.
 Reads the device to update the last state.
-- **void reset(uint8_t re)** reset one rotary encoder counter to 0.
+- **bool reset(uint8_t re)** reset one rotary encoder counter to 0.
 Reads the device to update the last state.
-If re is out of range, nothing is changed.
+If re is out of range, false is returned, nothing is changed.
 
 
 ### Core functions
@@ -192,7 +188,7 @@ As said before the user must guard not to interfere with the
 rotary encoder pins.
 - **uint8_t read8()** read all pins in one I2C IO action. When one need to access multiple 
 input pins this is faster but need some bit masking.
-- **bool write8(uint8_t bitmask)** writes to multiple pins at once, e.g. to control multiple
+- **bool write8(uint8_t bitMask)** writes to multiple pins at once, e.g. to control multiple
 LEDs in one IO action. As said before the user must guard not to interfere with the
 rotary encoder pins.
 
