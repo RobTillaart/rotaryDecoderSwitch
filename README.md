@@ -118,8 +118,8 @@ Supporting devices
 constructor to set the address and optional the Wire bus.
 - **bool begin(uint8_t deviceCount = 2)** UNO ea. initializes the class. 
 deviceCount is the number of rotary encoders connected. (Max 2 per PCF8574)
-Returns true if the PCF8574 is on the I2C bus.
-- **bool isConnected()** returns true if the PCF8574 is on the I2C bus.
+Returns true if the PCF8574 address is found on the I2C bus.
+- **bool isConnected()** returns true if the PCF8574 address is found on the I2C bus.
 - **uint8_t getRECount()** returns number of rotary encoders from begin(), 
 convenience e.g. for for loops.
 - **void reset()** reset all internal counters to 0.
@@ -140,6 +140,9 @@ Since 0.4.3 the library supports changing the "count" direction.
 
 Note: if one changes the direction there is no reset of the internal counter.
 The user needs to call **reset(re)** manually to start with zero again.
+
+Note: If one wants a permanent swapping of the direction one can swap
+the A and B lines of the rotary encoder.
 
 
 ### Core functions
